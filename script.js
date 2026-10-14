@@ -11,8 +11,15 @@ function render (html) {
   - If they cancel or leave blank, show a friendly message
 */
 function greet () {
-  // TODO: Write your code here
-}
+  const userName = prompt('What is your name?')
+    if(!userName || !userName.trim()){
+      render ("<p class = 'text-muted'>No name entered.</p>")
+      return
+    } else{
+      render (`<p> Hello ${userName} </p>`)
+    }
+  }
+
 
 /* 
   Function 2 — averageNumbers()
@@ -23,8 +30,27 @@ function greet () {
   - Display the average AND the list of numbers
 */
 function averageNumbers () {
-  // TODO: Write your code here
+
+  const nums = prompt('Enter a list of numbers, separated by commas:')
+
+  if (!nums){
+    render("<p class = 'text-muted'>No numbers entered.</p>");
+    return
+  }
+
+  const numArray = nums
+                  .split(',')
+                  .map(n => parseFloat(n.trim()))
+                  .filter(n => !isNaN(n))
+
+  const sum = numArray.reduce((a,b) => a + b, 0)
+  
+
+  const avg = sum / numArray.length
+
+
 }
+  
 
 /* 
   Function 3 — timeOfDay()
