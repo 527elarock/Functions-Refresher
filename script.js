@@ -1,6 +1,6 @@
 // Helper function: writes any HTML into the #out div
-function render (html) {
-  document.getElementById('out').innerHTML = html
+function render(html) {
+  document.getElementById("out").innerHTML = html;
 }
 
 /* 
@@ -10,16 +10,15 @@ function render (html) {
   - If they type something, display "Hello, NAME!"
   - If they cancel or leave blank, show a friendly message
 */
-function greet () {
-  const userName = prompt('What is your name?')
-    if(!userName || !userName.trim()){
-      render ("<p class = 'text-muted'>No name entered.</p>")
-      return
-    } else{
-      render (`<p> Hello ${userName} </p>`)
-    }
+function greet() {
+  const userName = prompt("What is your name?");
+  if (!userName || !userName.trim()) {
+    render("<p class = 'text-muted'>No name entered.</p>");
+    return;
+  } else {
+    render(`<p> Hello ${userName} </p>`);
   }
-
+}
 
 /* 
   Function 2 — averageNumbers()
@@ -29,28 +28,31 @@ function greet () {
   - Calculate the average
   - Display the average AND the list of numbers
 */
-function averageNumbers () {
+function averageNumbers() {
+  const nums = prompt("Enter a list of numbers, separated by commas:");
 
-  const nums = prompt('Enter a list of numbers, separated by commas:')
-
-  if (!nums){
+  if (!nums) {
     render("<p class = 'text-muted'>No numbers entered.</p>");
-    return
+    return;
   }
 
   const numArray = nums
-                  .split(',')
-                  .map(n => parseFloat(n.trim()))
-                  .filter(n => !isNaN(n))
+    .split(",")
+    .map((n) => parseFloat(n.trim()))
+    .filter((n) => !isNaN(n));
 
-  const sum = numArray.reduce((a,b) => a + b, 0)
-  
+  const sum = numArray.reduce((a, b) => a + b, 0);
 
-  const avg = sum / numArray.length
+  const avg = sum / numArray.length;
 
+  const list = numArray
+    .map((n) => `<li class = "list-group-item"> ${n}</li>`)
+    .join("");
 
+  render(`<p> Average: <strong> ${avg}</strong> </p>
+            <ul class="list-group"> ${list}</ul>    
+        `);
 }
-  
 
 /* 
   Function 3 — timeOfDay()
@@ -59,8 +61,22 @@ function averageNumbers () {
   - Decide whether it's morning, afternoon, or evening
   - Display a message like "Good morning!" 
 */
-function timeOfDay () {
-  // TODO: Write your code here
+function timeOfDay() {
+  const h = new Date().getHours();
+
+  let msg = "";
+
+  if ((5 <= h) & (h < 12)) {
+    msg = "Good Morning!";
+  } else if ((12 <= h) & (h < 15)) {
+    msg = "Good Afternoon!";
+  } else if ((15 <= h) & (h < 18)) {
+    msg = "Good Evening!";
+  } else {
+    msg = "Good Night!";
+  }
+
+  render(`<p>${msg}</p>`);
 }
 
 /* 
@@ -71,7 +87,7 @@ function timeOfDay () {
   - Display the result
   - Handle invalid input (like blanks or min >= max)
 */
-function randomBetween () {
+function randomBetween() {
   // TODO: Write your code here
 }
 
@@ -81,16 +97,16 @@ function randomBetween () {
   - Clear whatever is inside #out
   - Replace it with a placeholder message like "Output cleared."
 */
-function clearOutput () {
+function clearOutput() {
   // TODO: Write your code here
 }
 
 // ---- Event listeners for the demo buttons ----
-document.getElementById('btnGreet').addEventListener('click', greet)
-document.getElementById('btnAvg').addEventListener('click', averageNumbers)
-document.getElementById('btnTime').addEventListener('click', timeOfDay)
-document.getElementById('btnRandom').addEventListener('click', randomBetween)
-document.getElementById('btnClear').addEventListener('click', clearOutput)
+document.getElementById("btnGreet").addEventListener("click", greet);
+document.getElementById("btnAvg").addEventListener("click", averageNumbers);
+document.getElementById("btnTime").addEventListener("click", timeOfDay);
+document.getElementById("btnRandom").addEventListener("click", randomBetween);
+document.getElementById("btnClear").addEventListener("click", clearOutput);
 
 /* 
   ------------------------------------------
@@ -99,10 +115,72 @@ document.getElementById('btnClear').addEventListener('click', clearOutput)
   Add 4 new functions here, each with its own button in index.html:
   
   1) Change the page title text to something new.
-  2) Each time you press the button, the output text color cycles through a few choices (red, green, orange, etc.).
+
+
+
+
+
+  2) Each time you press the button, the output text color cycles through a few choices
+  
+  
+  
+  
+  (red, green, orange, etc.).
   3) Press the button to change the background color of the output box to a random color.
   4) Ask the user for a number and display that number doubled.
   
   Write each function below, and don’t forget to connect each one 
   to a new button in index.html using addEventListener.
 */
+
+// 1
+function changeTitle() {
+  document.title = "Rafi";
+  document.querySelector('header h1').textContent = "Rafi";
+}
+
+// 2
+let color = 1;
+
+function changeTextColor() {
+  if (color == 1) {
+    document.getElementById('out').style.color = "red";
+    color = 2;
+  } else if (color == 2) {
+    document.getElementById('out').style.color = "green";
+    color = 3;
+  } else {
+    document.getElementById('out').style.color = "orange";
+    color = 1;
+  }
+}
+
+// 3
+function changeBackground() {
+  let red = Math.floor(Math.random() * 256);
+  let green = Math.floor(Math.random() * 256);
+  let blue = Math.floor(Math.random() * 256);
+
+  document.getElementById("out").style.setProperty(
+    "background-color",
+    "rgb(" + red + ", " + green + ", " + blue + ")",
+    "important"
+  );
+}
+
+// 4
+function doubleNumber() {
+  let number = prompt("Enter a number:");
+
+  if (number === null || number.trim() === "" || isNaN(number)) {
+    render("<p>Please enter a valid number.</p>");
+  } else {
+    render("<p>Double: " + (number * 2) + "</p>");
+  }
+}
+
+
+document.getElementById('btnTitle').addEventListener('click', changeTitle);
+document.getElementById('btnTextColor').addEventListener('click', changeTextColor);
+document.getElementById('btnBackground').addEventListener('click', changeBackground);
+document.getElementById('btnDouble').addEventListener('click', doubleNumber);
